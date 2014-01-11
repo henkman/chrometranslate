@@ -3,6 +3,7 @@
 	"name": "chrometranslate",
 	"version": "1.1",
 	"description": "Translate selected text immediatly",
+	"homepage_url": "http://papplampe.github.io/chrometranslate/",
 	"update_url": "https://raw2.github.com/papplampe/chrometranslate/master/dist/updates.xml",
 	"icons": {
 		"128": "icon.png"
