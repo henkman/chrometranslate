@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "chrometranslate",
-	"version": "1.0",
+	"version": "1.1",
 	"description": "Translate selected text immediatly",
 	"update_url": "https://raw2.github.com/papplampe/chrometranslate/master/dist/updates.xml",
 	"icons": {
