@@ -1,0 +1,36 @@
+{
+	"manifest_version": 2,
+	"name": "chrometranslate",
+	"version": "1.0",
+	"description": "Translate selected text immediatly",
+	"icons": {
+		"128": "icon.png"
+	},
+	"permissions": [
+		"http://translate.google.com/*"
+	],
+	
+	"options_page":"options.html",
+	"browser_action": {
+		"default_icon": "button_inactive.png"
+	},
+	"background": {
+		"scripts": ["background.js"],
+		"persistent": true
+	},
+	"content_scripts": [
+		{
+			"matches": ["*://*/*"],
+			"run_at": "document_end",
+			"js": [
+				"jquery-2.0.3.min.js",
+				"jquery-ui-1.9.2.custom.min.js",
+				"content_script.js"
+			],
+			"css": [
+				"jquery-ui-1.9.2.custom.min.css",
+				"content_script.css"
+			]
+		}
+	]
+}
