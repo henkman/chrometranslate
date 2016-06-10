@@ -1,8 +1,27 @@
+<!DOCTYPE html>
 <html>
-	<head><title> Options</title></head>
-	<body>
-		<label for="targetLang">target language:</label>
-		<select id="targetLang">
+<head><title>Options</title></head>
+<style>
+label {
+	display: block;
+	padding: 2px;
+}
+section {
+	padding:5px;
+	margin: 2px;
+	border: solid 2px;
+}
+</style>
+<body>
+<section>
+	<h3>Language</h3>
+	<hr/>
+	<label>
+		<input type="number" step="1" min="30" max="500" id="DefaultHeight">
+		default height of panel
+	</label>
+	<label>
+		<select id="TargetLanguage">
 			<option value="af">Afrikaans</option>
 			<option value="sq">Albanian</option>
 			<option value="ar">Arabic</option>
@@ -18,7 +37,7 @@
 			<option value="cs">Czech</option>
 			<option value="da">Danish</option>
 			<option value="nl">Dutch</option>
-			<option value="en" selected="selected">English</option>
+			<option value="en">English</option>
 			<option value="et">Estonian</option>
 			<option value="tl">Filipino</option>
 			<option value="fi">Finnish</option>
@@ -61,11 +80,12 @@
 			<option value="vi">Vietnamese</option>
 			<option value="cy">Welsh</option>
 			<option value="yi">Yiddish</option>
-		</select><br/>
-		<div id="status"></div>
-		<button id="save">Save</button><br/><br/><br/>
-		Licensed under the <a href="https://raw2.github.com/papplampe/chrometranslate/master/LICENSE">MIT License</a>.<br/>
-		Icons made by <a href="http://www.iconexpo.com/">Iconexpo</a>
-	</body>
-	<script src="options.js"></script>
+		</select>
+	</label>
+</section>
+<div id="status"></div>
+<button id="save">Save</button>
+<button id="restore">Restore</button>
+<script src="options.min.js"></script>
+</body>
 </html>
