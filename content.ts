@@ -60,8 +60,6 @@ chrome.storage.local.get(defaultOptions, (opts: Options) => {
 			border.style.background = "#696969";
 			border.style.height = "5px";
 			border.style.cursor = "n-resize";
-			border.style.fontSize = this.opts.FontSize + "px";
-			border.style.padding = "5px";
 			border.onmousedown = (ev: MouseEvent) => {
 				const panel = <HTMLDivElement>ev.srcElement.parentElement;
 				const startHeight = panel.clientHeight;
@@ -85,6 +83,8 @@ chrome.storage.local.get(defaultOptions, (opts: Options) => {
 			};
 			panel.appendChild(border);
 			const text = <HTMLDivElement>document.createElement("div");
+			text.style.fontSize = this.opts.FontSize + "px";
+			text.style.padding = "5px";
 			text.textContent = "Select some text to translate";
 			panel.appendChild(text);
 			this.panel = panel;

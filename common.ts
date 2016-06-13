@@ -18,6 +18,6 @@ interface TranslateMessage extends Message {
 }
 const defaultOptions: Options = {
 	DefaultHeight: 200,
-	FontSize: 18,
+	FontSize: 16,
 	TargetLanguage: "en",
 };
