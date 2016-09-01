@@ -30,7 +30,7 @@ chrome.storage.local.get(defaultOptions, (opts: Options) => {
 				} break;
 				case MessageType.Translate: {
 					const m = <TranslateMessage>message;
-					this.text.textContent = m.Text;
+					this.text.innerHTML = m.Text;
 				} break;
 			}
 		}
@@ -85,7 +85,7 @@ chrome.storage.local.get(defaultOptions, (opts: Options) => {
 			const text = <HTMLDivElement>document.createElement("div");
 			text.style.fontSize = this.opts.FontSize + "px";
 			text.style.padding = "5px";
-			text.textContent = "Select some text to translate";
+			text.innerHTML = "Select some text to translate";
 			panel.appendChild(text);
 			this.panel = panel;
 			this.text = text;

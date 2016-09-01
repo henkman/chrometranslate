@@ -5,9 +5,13 @@ chrome.storage.local.get(defaultOptions, (opts: Options) => {
 	class Background {
 		private opts: Options;
 		private panelOpen: boolean;
+		private reTranslations: RegExp;
+		private reTranslation: RegExp;
 		constructor(opts: Options) {
 			this.opts = opts;
 			this.panelOpen = false;
+			this.reTranslations = new RegExp("^\\[{2}(.*?)\\]{2},", "g");
+			this.reTranslation = new RegExp("\\[\"([^\"]+)\"", "g");
 			chrome.runtime.onMessage.addListener(this.onMessage);
 			chrome.tabs.onUpdated.addListener(this.onUpdated);
 			chrome.tabs.onActivated.addListener(this.onActivated);
@@ -70,24 +74,28 @@ chrome.storage.local.get(defaultOptions, (opts: Options) => {
 			const xhr = new XMLHttpRequest();
 			xhr.open(
 				"POST",
-				"https://translate.google.com/translate_a/t",
+				"https://translate.googleapis.com/translate_a/single",
 				true
 			);
 			xhr.onreadystatechange = () => {
 				const DONE = 4;
 				if (xhr.readyState == DONE) {
-					const translation = <Array<String>>JSON.parse(
-						xhr.responseText
-					);
-					if (translation.length == 0) {
+					const trs = this.reTranslations.exec(xhr.responseText);
+					if (!trs) {
 						sendResponse({ error: "no translation found" });
 						return;
+					}
+					const strs = trs[1].replace(new RegExp("\\\\n", "g"), "<br>");
+					let tr: RegExpExecArray;
+					let t = "";
+					while (tr = this.reTranslation.exec(strs)) {
+						t += tr[1]
 					}
 					chrome.tabs.sendMessage(
 						sender.tab.id,
 						<TranslateMessage>{
 							Type: MessageType.Translate,
-							Text: translation[0]
+							Text: t
 						}
 					);
 				}
@@ -96,11 +104,23 @@ chrome.storage.local.get(defaultOptions, (opts: Options) => {
 				"Content-type",
 				"application/x-www-form-urlencoded"
 			);
-			xhr.send(
-				"client=x&hl=en&sl=auto" +
-				"&text=" + tm.Text +
-				"&tl=" + this.opts.TargetLanguage
-			);
+			const ps = {
+				"client": "gtx",
+				"ie": "UTF-8",
+				"oe": "UTF-8",
+				"sl": "auto",
+				"tl": this.opts.TargetLanguage,
+				"dt": "t",
+				"q": tm.Text,
+			};
+			let p = "";
+			for (let key in ps) {
+				if (p != "") {
+					p += "&";
+				}
+				p += key + "=" + encodeURIComponent(ps[key]);
+			}
+			xhr.send(p);
 		}
 	}
 	new Background(opts);
